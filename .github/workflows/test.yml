@@ -43,9 +43,9 @@ jobs:
         run: echo "$COMMIT_PULLS"
       - name: joined messages
         env:
-          JOIN_MESSAGE: ${{ join(github.event.pull_request.title, github.event.pull_request.body) }}
+          JOIN_MESSAGE: ${{ join(github.event.commits.*.message) }}
         run: echo "$JOIN_MESSAGE"
       - uses: actions/setup-node@v1
-        if: ${{ contains(join(github.event.pull_request.title, github.event.pull_request.body), '#skip') }}
+        if: ${{ !contains(join(github.event.commits.*.message), '#skip') }}
         with:
           node-version: '12.x'
