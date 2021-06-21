@@ -19,7 +19,7 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
       - name: commits
         env:
-          COMMITS: ${{ toJson(github.event.commits) }}
+          COMMITS: ${{ toJson(github.event.commits[0]) }}
         run: echo "$COMMITS"
       - name: commit messages
         env:
@@ -42,6 +42,6 @@ jobs:
           JOIN_MESSAGE: ${{ join(github.event.pull_request.title, github.event.pull_request.body) }}
         run: echo "$JOIN_MESSAGE"
       - uses: actions/setup-node@v1
-        if: ${{ !contains(join(github.event.pull_request.title, github.event.pull_request.body), '#skip') }}
+        if: ${{ contains(join(github.event.pull_request.title, github.event.pull_request.body), '#skip') }}
         with:
           node-version: '12.x'
