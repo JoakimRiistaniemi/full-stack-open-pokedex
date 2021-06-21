@@ -6,7 +6,6 @@ on:
       - master
 
 jobs:
-  if:
   simple_deployment_pipeline:
     runs-on: ubuntu-18.04 
     steps:
