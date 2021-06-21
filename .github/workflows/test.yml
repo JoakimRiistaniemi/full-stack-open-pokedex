@@ -4,13 +4,16 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
 
 jobs:
   a_test_job:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - name: gihub context
+      - name: github context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
@@ -22,3 +25,23 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
+      - name: pull request
+        env:
+          PULLS: ${{ toJson(github.event.pull_request) }}
+        run: echo "$PULLS"
+      - name: pull messages
+        env:
+          PULL_MESSAGE: ${{ toJson(github.event.pull_request.body) }}
+        run: echo "$PULL_MESSAGE"
+      - name: commit in pull request
+        env:
+          COMMIT_PULLS: ${{ toJson(github.event.pull_request.title) }}
+        run: echo "$COMMIT_PULLS"
+      - name: commit in pull messages
+        env:
+          COMMIT_PULL_MESSAGE: ${{ toJson(github.event.pull_request._links.commits[0].commit.*.message) }}
+        run: echo "$COMMIT_PULL_MESSAGE"
+      - uses: actions/setup-node@v1
+        if: ${{ !contains(join(github.event.pull_request.title, github.event.pull_request.body), '#skip') }}
+        with:
+          node-version: '12.x'
