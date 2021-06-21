@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - name: gihub context
+      - name: github context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
@@ -29,11 +29,11 @@ jobs:
         env:
           PULLS: ${{ toJson(github.event.pull_request) }}
         run: echo "$PULLS"
-      - name: commit messages
+      - name: pull messages
         env:
           PULL_MESSAGE: ${{ toJson(github.event.pull_request.body) }}
         run: echo "$PULL_MESSAGE"
       - uses: actions/setup-node@v1
-        if: ${{ contains(github.event.commits.*.message, 'skip') }}
+        if: ${{ contains(github.event.pull_request.body, 'skip') }}
         with:
           node-version: '12.x'
