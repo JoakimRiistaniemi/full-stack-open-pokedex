@@ -17,14 +17,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: commits1
+      - name: commits
         env:
-          COMMITS1: ${{ toJson(github.event.commits) }}
-        run: echo "$COMMITS1"
-      - name: commits2
-        env:
-          COMMITS2: ${{ toJson(github.event.commits[0]) }}
-        run: echo "$COMMITS2"
+          COMMITS: ${{ toJson(github.event.commits) }}
+        run: echo "$COMMITS"
       - name: commit messages
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
@@ -33,19 +29,11 @@ jobs:
         env:
           PULLS: ${{ toJson(github.event.pull_request) }}
         run: echo "$PULLS"
-      - name: pull messages
-        env:
-          PULL_MESSAGE: ${{ toJson(github.event.pull_request.body) }}
-        run: echo "$PULL_MESSAGE"
-      - name: commit in pull request
-        env:
-          COMMIT_PULLS: ${{ toJson(github.event.pull_request.commits_url) }}
-        run: echo "$COMMIT_PULLS"
       - name: joined messages
         env:
-          JOIN_MESSAGE: ${{ join(github.event.pull_request.title, github.event.pull_request.body) }}
+          JOIN_MESSAGE: ${{ join(github.event.commits.*.message) }}
         run: echo "$JOIN_MESSAGE"
       - uses: actions/setup-node@v1
-        if: ${{ contains(join(github.event.pull_request.title, github.event.pull_request.body), '#skip') }}
+        if: ${{ !contains(join(github.event.commits.*.message), '#skip') }}
         with:
           node-version: '12.x'
