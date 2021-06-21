@@ -17,13 +17,17 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: commits
+      - name: commits1
         env:
-          COMMITS: ${{ toJson(github.event.commits[0]) }}
-        run: echo "$COMMITS"
+          COMMITS1: ${{ toJson(github.event.commits) }}
+        run: echo "$COMMITS1"
+      - name: commits2
+        env:
+          COMMITS2: ${{ toJson(github.event.commits[0]) }}
+        run: echo "$COMMITS2"
       - name: commit messages
         env:
-          COMMIT_MESSAGES: ${{ toJson(github.event.commits[][message]) }}
+          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
       - name: pull request
         env:
