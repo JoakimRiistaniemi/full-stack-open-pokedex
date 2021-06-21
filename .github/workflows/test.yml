@@ -35,11 +35,11 @@ jobs:
         run: echo "$PULL_MESSAGE"
       - name: commit in pull request
         env:
-          COMMIT_PULLS: ${{ toJson(github.event.pull_request[0].commit) }}
+          COMMIT_PULLS: ${{ toJson(github.event.pull_request._links.commits[0].commit) }}
         run: echo "$COMMIT_PULLS"
       - name: commit in pull messages
         env:
-          COMMIT_PULL_MESSAGE: ${{ toJson(github.event.pull_request[0].commit.*.message) }}
+          COMMIT_PULL_MESSAGE: ${{ toJson(github.event.pull_request._links.commits[0].commit.*.message) }}
         run: echo "$COMMIT_PULL_MESSAGE"
       - uses: actions/setup-node@v1
         if: ${{ contains(github.event.pull_request.body, 'skip') }}
