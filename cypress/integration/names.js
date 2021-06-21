@@ -7,6 +7,5 @@ describe('Pokedex', function() {
   it('pokemon page can be opened', function() {
     cy.contains('ivysaur').click()
     cy.contains('chlorophyll')
-    cy.contains('overgrow')
   })
 })
