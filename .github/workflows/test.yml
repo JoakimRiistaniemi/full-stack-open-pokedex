@@ -37,10 +37,6 @@ jobs:
         env:
           COMMIT_PULLS: ${{ toJson(github.event.pull_request.title) }}
         run: echo "$COMMIT_PULLS"
-      - name: commit in pull messages
-        env:
-          COMMIT_PULL_MESSAGE: ${{ toJson(github.event.pull_request._links.commits[0].commit.*.message) }}
-        run: echo "$COMMIT_PULL_MESSAGE"
       - name: joined messages
         env:
           JOIN_MESSAGE: ${{ join(github.event.pull_request.title, github.event.pull_request.body) }}
