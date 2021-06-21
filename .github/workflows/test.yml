@@ -25,6 +25,14 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
+      - name: pull request
+        env:
+          PULLS: ${{ toJson(github.event.pull_request) }}
+        run: echo "$PULLS"
+      - name: commit messages
+        env:
+          PULL_MESSAGE: ${{ toJson(github.event.pull_request.body) }}
+        run: echo "$PULL_MESSAGE"
       - uses: actions/setup-node@v1
         if: ${{ contains(github.event.commits.*.message, 'skip') }}
         with:
