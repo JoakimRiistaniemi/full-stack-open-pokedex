@@ -42,6 +42,6 @@ jobs:
           COMMIT_PULL_MESSAGE: ${{ toJson(github.event.pull_request._links.commits[0].commit.*.message) }}
         run: echo "$COMMIT_PULL_MESSAGE"
       - uses: actions/setup-node@v1
-        if: ${{ contains(github.event.pull_request._links.commits[0].commit.*.message, 'skip') }}
+        if: ${{ !contains(join(github.event.pull_request.title, github.event.pull_request.body), '#skip') }}
         with:
           node-version: '12.x'
