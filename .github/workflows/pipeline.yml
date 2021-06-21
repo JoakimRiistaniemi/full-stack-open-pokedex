@@ -9,9 +9,8 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  if: ${{ github.event_name == 'push' }}  
   simple_deployment_pipeline:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-18.04 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -32,6 +31,7 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
       - uses: akhileshns/heroku-deploy@v3.12.12
+        if: ${{ github.event_name == 'push' }} 
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "pokedex-55555" #Must be unique in Heroku
