@@ -3,9 +3,9 @@ name: Deployment pipeline
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
-    branches: [main]
+    branches: [master]
     types: [opened, synchronize]
 
 jobs:
@@ -31,7 +31,6 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
       - uses: akhileshns/heroku-deploy@v3.12.12
-        if: ${{ github.event_name == 'push' }}
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "pokedex-55555" #Must be unique in Heroku
