@@ -45,7 +45,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
-      - uses: 8398a7/action-slack@v3
+      - name: Slack actions
+        uses: 8398a7/action-slack@v3
         with:
           status: custom
           fields: workflow,job,commit,repo,ref,author,took,message
