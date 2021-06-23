@@ -44,7 +44,7 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip')}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patchsteps:
+          DEFAULT_BUMP: patch
       - uses: 8398a7/action-slack@v3
         with:
         status: custom
